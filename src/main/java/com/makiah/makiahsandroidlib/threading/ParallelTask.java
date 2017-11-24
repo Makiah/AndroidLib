@@ -1,11 +1,10 @@
-package makiah.smartalarm.threading;
+package com.makiah.makiahsandroidlib.threading;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import makiah.smartalarm.logging.OnScreenLog;
-import makiah.smartalarm.logging.ProcessConsole;
-
+import com.makiah.makiahsandroidlib.logging.OnScreenLog;
+import com.makiah.makiahsandroidlib.logging.ProcessConsole;
 
 /**
  * NiFTComplexTask is an easier method of working with AsyncTasks, which provides a convenient process console and a

@@ -1,4 +1,4 @@
-package makiah.smartalarm.logging;
+package com.makiah.makiahsandroidlib.logging;
 
 import java.util.ArrayList;
 

@@ -1,11 +1,11 @@
-package makiah.smartalarm.logging;
+package com.makiah.makiahsandroidlib.logging;
 
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.makiah.makiahsandroidlib.threading.ParallelTask;
 
-import makiah.smartalarm.threading.ParallelTask;
+import java.util.ArrayList;
 
 /**
  * The Advanced Console is an easy way to visualize a large number of tasks in parallel without having to rely
