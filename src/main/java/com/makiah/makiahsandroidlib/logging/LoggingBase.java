@@ -17,7 +17,7 @@ public abstract class LoggingBase extends ParallelTask
 
     public LoggingBase(TaskParent parent)
     {
-        super(parent, "Logging Task");
+        super(parent, "Logging Task"); // Don't provide a logger here because there's no need.
 
         //Initialize required components.
         sequentialConsoleData = new ArrayList<>();

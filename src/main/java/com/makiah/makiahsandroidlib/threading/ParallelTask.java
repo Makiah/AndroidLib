@@ -3,8 +3,10 @@ package com.makiah.makiahsandroidlib.threading;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.makiah.makiahsandroidlib.logging.OnScreenLog;
+import com.makiah.makiahsandroidlib.logging.LoggingBase;
 import com.makiah.makiahsandroidlib.logging.ProcessConsole;
+
+import java.util.logging.Logger;
 
 /**
  * NiFTComplexTask is an easier method of working with AsyncTasks, which provides a convenient process console and a
@@ -21,7 +23,7 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     public final String taskName;
 
     // Log properties.
-    private OnScreenLog screenLog;
+    private LoggingBase logger;
     private ProcessConsole processConsole;
 
     // Just to know whether the task is currently being run.
@@ -34,26 +36,20 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     /**
      * Creates a task with a given name and a console with that same name.
      */
-    public ParallelTask (TaskParent parent)
-    {
-        this(parent, "Unnamed Task");
-    }
     public ParallelTask (TaskParent parent, String taskName)
     {
-        this.taskName = taskName;
-
-        this.flow = new Flow(parent);
+        this(parent, taskName, null);
     }
-
-    /**
-     * Tells this task where to display output (on screen), to which the task responds by creating
-     * a new process console.
-     * @param screenLog
-     */
-    public void provideOnScreenLog(OnScreenLog screenLog)
+    public ParallelTask (TaskParent parent, String taskName, LoggingBase log)
     {
-        this.screenLog = screenLog;
-        this.processConsole = screenLog.newProcessConsole(taskName);
+        this.taskName = taskName;
+        this.flow = new Flow(parent);
+
+        if (log == null)
+            return;
+
+        this.logger = log;
+        this.processConsole = this.logger.newProcessConsole(taskName);
     }
 
     /**
@@ -64,8 +60,8 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
      */
     protected void logSequentialLines(String... lines)
     {
-        if (screenLog != null)
-            screenLog.lines(lines);
+        if (logger != null)
+            logger.lines(lines);
     }
     protected void logLinesToProcessConsole(String... lines)
     {

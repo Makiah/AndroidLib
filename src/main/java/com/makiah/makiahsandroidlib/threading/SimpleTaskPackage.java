@@ -14,7 +14,7 @@ public class SimpleTaskPackage extends ParallelTask
     }
     public SimpleTaskPackage(TaskParent parent, String groupName, SimpleTask... tasks)
     {
-        super(parent);
+        super(parent, groupName);
 
         this.groupName = groupName;
 
