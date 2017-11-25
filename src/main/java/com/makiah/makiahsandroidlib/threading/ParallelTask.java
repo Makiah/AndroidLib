@@ -24,6 +24,13 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     private OnScreenLog screenLog;
     private ProcessConsole processConsole;
 
+    // Just to know whether the task is currently being run.
+    private boolean currentlyRunning = false;
+    public boolean isCurrentlyRunning()
+    {
+        return currentlyRunning;
+    }
+
     /**
      * Creates a task with a given name and a console with that same name.
      */
@@ -80,6 +87,7 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     {
         try
         {
+            currentlyRunning = true;
             onDoTask ();
         }
         catch (InterruptedException e) //Upon stop requested by Flow
@@ -95,6 +103,7 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
         finally
         {
             onQuitAndDestroyConsole ();
+            currentlyRunning = false;
         }
 
         return null;
