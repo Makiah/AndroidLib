@@ -161,6 +161,9 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     {
         try
         {
+            if (currentlyRunning)
+                return;
+
             this.executeOnExecutor (AsyncTask.THREAD_POOL_EXECUTOR);
 
             if (processConsole == null)
@@ -181,6 +184,9 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     {
         try
         {
+            if (!currentlyRunning)
+                return;
+
             this.cancel (true);
 
             if (processConsole == null)
