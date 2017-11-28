@@ -3,18 +3,18 @@ package com.makiah.makiahsandroidlib.threading;
 /**
  * NiFTSimpleTasks run in a single thread context, and are cycled through one by one in order to avoid counting toward the thread limit.
  */
-public abstract class SimpleTask
+public abstract class ScheduledTask
 {
     public final String taskName;
-    public SimpleTaskPackage containingPackage;
+    public ScheduledTaskPackage containingPackage;
     private boolean running = true;
     public long nextRunTime = 0;
 
-    public SimpleTask ()
+    public ScheduledTask()
     {
         this ("Unnamed Simple Task");
     }
-    public SimpleTask (String taskName)
+    public ScheduledTask(String taskName)
     {
         this.taskName = taskName;
     }
