@@ -1,5 +1,7 @@
 package com.makiah.makiahsandroidlib.threading;
 
+import com.makiah.makiahsandroidlib.logging.LoggingBase;
+
 import java.util.ArrayList;
 
 /**
@@ -8,9 +10,10 @@ import java.util.ArrayList;
  */
 public class ScheduledTaskPackage extends ParallelTask
 {
-    private enum ScheduledUpdateMode {ASYNCHRONOUS, SYNCHRONOUS}
+    public enum ScheduledUpdateMode {ASYNCHRONOUS, SYNCHRONOUS}
     private ScheduledUpdateMode currentUpdateMode = ScheduledUpdateMode.ASYNCHRONOUS;
 
+    // No need for a logger.
     public final String groupName;
     public ScheduledTaskPackage(TaskParent parent, String groupName)
     {
@@ -47,6 +50,11 @@ public class ScheduledTaskPackage extends ParallelTask
         }
 
         currentUpdateMode = updateMode;
+    }
+
+    public ScheduledUpdateMode getUpdateMode()
+    {
+        return currentUpdateMode;
     }
 
     /**

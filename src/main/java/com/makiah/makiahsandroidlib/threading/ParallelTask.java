@@ -98,7 +98,8 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
         }
         finally
         {
-            onQuitAndDestroyConsole ();
+            onQuitTask();
+            destroyProcessConsole();
             currentlyRunning = false;
         }
 
@@ -119,7 +120,8 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
     @Override
     protected final void onCancelled ()
     {
-        onQuitAndDestroyConsole ();
+        onQuitTask();
+        destroyProcessConsole();
     }
 
     /**
@@ -128,25 +130,6 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
      * @throws InterruptedException
      */
     protected abstract void onDoTask () throws InterruptedException;
-
-    /**
-     * Used solely in this class, used to destroy the created process console and THEN
-     * run the desired onCompletion method.
-     */
-    private void onQuitAndDestroyConsole ()
-    {
-        onQuitTask ();
-
-        Log.i(taskName, "Quit " + taskName);
-
-        if (processConsole == null)
-            return;
-
-        if (processConsole.isCurrentlyActive())
-            processConsole.destroy();
-
-        processConsole = null;
-    }
 
     /**
      * Override this method if you want to do something when your task ends (regardless of whether it was cancelled or finished on its own).
@@ -162,9 +145,13 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
         try
         {
             if (currentlyRunning)
+            {
+                logSequentialLines("Already running " + taskName);
                 return;
+            }
 
             this.executeOnExecutor (AsyncTask.THREAD_POOL_EXECUTOR);
+            logSequentialLines("Started " + taskName);
 
             if (processConsole == null)
                 return;
@@ -175,6 +162,7 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
         catch (Exception e)
         {
             Log.i(taskName, "Uh oh! " + taskName + " can't run!" + e.getMessage ());
+            logSequentialLines("Uh oh! " + taskName + " can't run!" + e.getMessage ());
         }
     }
     /**
@@ -189,15 +177,24 @@ public abstract class ParallelTask extends AsyncTask <Void, Void, Void>
 
             this.cancel (true);
 
-            if (processConsole == null)
-                return;
-
-            if (processConsole.isCurrentlyActive())
-                processConsole.destroy();
+            onQuitTask ();
+            destroyProcessConsole();
         }
         catch (Exception e) // Dirty but prevents unwanted program crashes.
         {
             Log.i(taskName, "Uh oh! " + taskName + " can't stop!" + e.getMessage ());
+            logSequentialLines("Uh oh! " + taskName + " can't stop!" + e.getMessage ());
         }
+    }
+
+    private void destroyProcessConsole()
+    {
+        if (processConsole == null)
+            return;
+
+        if (processConsole.isCurrentlyActive())
+            processConsole.destroy();
+
+        processConsole = null;
     }
 }
