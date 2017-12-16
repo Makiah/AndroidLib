@@ -66,7 +66,7 @@ public class ScheduledTaskPackage extends ParallelTask
             return;
 
         // Just update this task.
-        onDoTask();
+        updatePackage();
     }
 
     /**
@@ -89,6 +89,31 @@ public class ScheduledTaskPackage extends ParallelTask
         taskList.remove (scheduledTask);
     }
 
+    private void updatePackage() throws InterruptedException
+    {
+        // Cycle through whole list of tasks and run all that can be run.
+        for (int i = 0; i < taskList.size(); i++)
+        {
+            //Run if possible.
+            ScheduledTask task = taskList.get(i);
+            if (task.isRunning() && task.nextRunTime < System.currentTimeMillis())
+                task.nextRunTime = task.onContinueTask() + System.currentTimeMillis();
+
+            // Exit program if stop requested, otherwise yield to other threads.
+            flow.yield();
+        }
+
+        // Add all pending tasks (if they exist).
+        for (ScheduledTask pendingTask : pendingAddition)
+        {
+            taskList.add(pendingTask);
+            pendingAddition.remove(pendingTask);
+        }
+
+        // Exit program if stop requested, otherwise yield to other threads.
+        flow.yield();
+    }
+
     /**
      * The TaskPackageRunner is a ComplexTask which just loops through the list of simple tasks that it
      * needs to run and runs each depending on the pause they ask for.
@@ -100,27 +125,7 @@ public class ScheduledTaskPackage extends ParallelTask
     {
         while (true)
         {
-            // Cycle through whole list of tasks and run all that can be run.
-            for (int i = 0; i < taskList.size(); i++)
-            {
-                //Run if possible.
-                ScheduledTask task = taskList.get(i);
-                if (task.isRunning() && task.nextRunTime < System.currentTimeMillis())
-                    task.nextRunTime = task.onContinueTask() + System.currentTimeMillis();
-
-                // Exit program if stop requested, otherwise yield to other threads.
-                flow.yield();
-            }
-
-            // Add all pending tasks (if they exist).
-            for (ScheduledTask pendingTask : pendingAddition)
-            {
-                taskList.add(pendingTask);
-                pendingAddition.remove(pendingTask);
-            }
-
-            // Exit program if stop requested, otherwise yield to other threads.
-            flow.yield();
+            updatePackage();
         }
     }
 }
