@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public abstract class LoggingBase extends ParallelTask
 {
+    // Singleton property
+    public static LoggingBase instance;
+
     // Properties required for logging.
     private static final int MAX_SEQUENTIAL_LINES = 13;
     protected ArrayList<String> sequentialConsoleData; //Lines being added and removed.
@@ -18,6 +21,9 @@ public abstract class LoggingBase extends ParallelTask
     public LoggingBase(TaskParent parent)
     {
         super(parent, "Logging Task"); // Don't provide a logger here because there's no need.
+
+        // Initialize singleton
+        instance = this;
 
         //Initialize required components.
         sequentialConsoleData = new ArrayList<>();
