@@ -2,7 +2,7 @@ package com.makiah.makiahsandroidlib.threading;
 
 public class Flow
 {
-    private final TaskParent parent;
+    public final TaskParent parent;
 
     public Flow(TaskParent parent)
     {
