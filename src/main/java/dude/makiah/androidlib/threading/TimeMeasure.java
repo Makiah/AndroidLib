@@ -18,13 +18,13 @@ public class TimeMeasure
             this.conversionToNanoseconds = conversionToNanoseconds;
         }
 
-        public long getMeasureIn(Units units, long measure)
+        public long getMeasureIn(Units units, double measure)
         {
             return (long)(measure * units.conversionToNanoseconds / conversionToNanoseconds);
         }
     }
 
-    public TimeMeasure(Units units, long duration)
+    public TimeMeasure(Units units, double duration)
     {
         this.nanoseconds = units.getMeasureIn(Units.NANOSECONDS, duration);
     }
