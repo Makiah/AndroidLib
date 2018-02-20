@@ -1,4 +1,4 @@
-package com.makiah.makiahsandroidlib.logging;
+package dude.makiah.androidlib.logging;
 
 import java.util.ArrayList;
 

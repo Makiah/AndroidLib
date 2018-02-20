@@ -1,6 +1,4 @@
-package com.makiah.makiahsandroidlib.threading;
-
-import com.makiah.makiahsandroidlib.logging.LoggingBase;
+package dude.makiah.androidlib.threading;
 
 import java.util.ArrayList;
 
@@ -94,10 +92,10 @@ public class ScheduledTaskPackage extends ParallelTask
         // Cycle through whole list of tasks and run all that can be run.
         for (int i = 0; i < taskList.size(); i++)
         {
-            //Run if possible.
+            // Run if possible.
             ScheduledTask task = taskList.get(i);
-            if (task.isRunning() && task.nextRunTime < System.currentTimeMillis())
-                task.nextRunTime = task.onContinueTask() + System.currentTimeMillis();
+            if (task.isRunning() && task.nextRunTimeNanoseconds < System.nanoTime())
+                task.nextRunTimeNanoseconds = task.onContinueTask().durationIn(TimeMeasure.Units.NANOSECONDS) + System.nanoTime();
 
             // Exit program if stop requested, otherwise yield to other threads.
             flow.yield();

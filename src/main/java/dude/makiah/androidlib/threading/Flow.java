@@ -1,4 +1,4 @@
-package com.makiah.makiahsandroidlib.threading;
+package dude.makiah.androidlib.threading;
 
 public class Flow
 {

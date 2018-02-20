@@ -1,10 +1,10 @@
-package com.makiah.makiahsandroidlib.threading;
+package dude.makiah.androidlib.threading;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.makiah.makiahsandroidlib.logging.LoggingBase;
-import com.makiah.makiahsandroidlib.logging.ProcessConsole;
+import dude.makiah.androidlib.logging.LoggingBase;
+import dude.makiah.androidlib.logging.ProcessConsole;
 
 import java.util.logging.Logger;
 

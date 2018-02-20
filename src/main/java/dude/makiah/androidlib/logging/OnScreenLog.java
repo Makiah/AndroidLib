@@ -1,9 +1,9 @@
-package com.makiah.makiahsandroidlib.logging;
+package dude.makiah.androidlib.logging;
 
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.makiah.makiahsandroidlib.threading.ParallelTask;
+import dude.makiah.androidlib.threading.ParallelTask;
 
 import java.util.ArrayList;
 

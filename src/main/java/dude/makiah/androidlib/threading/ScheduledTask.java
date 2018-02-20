@@ -1,4 +1,4 @@
-package com.makiah.makiahsandroidlib.threading;
+package dude.makiah.androidlib.threading;
 
 /**
  * NiFTSimpleTasks run in a single thread context, and are cycled through one by one in order to avoid counting toward the thread limit.
@@ -8,7 +8,7 @@ public abstract class ScheduledTask
     public final String taskName;
     public ScheduledTaskPackage containingPackage;
     private boolean running = true;
-    public long nextRunTime = 0;
+    public long nextRunTimeNanoseconds = 0;
 
     public ScheduledTask()
     {
@@ -33,6 +33,6 @@ public abstract class ScheduledTask
         return running;
     }
 
-    // The long returned indicates the amount of time to wait before running the task again.
-    protected abstract long onContinueTask () throws InterruptedException;
+    // The TimeMeasure returned indicates the amount of time to wait before running the task again.
+    protected abstract TimeMeasure onContinueTask () throws InterruptedException;
 }
