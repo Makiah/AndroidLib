@@ -9,7 +9,7 @@ public class TimeMeasure
     public enum Units
     {
         NANOSECONDS(1),
-        MILLISECONDS(1e-3),
+        MILLISECONDS(1e-6),
         SECONDS(1e-9);
 
         private final double conversionToNanoseconds;
