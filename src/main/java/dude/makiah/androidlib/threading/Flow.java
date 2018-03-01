@@ -26,14 +26,14 @@ public class Flow
     /**
      * Pauses for some set length of time by calling yield() repeatedly.
      *
-     * @param ms — the milliseconds to wait.
+     * @param time — the time to wait.
      * @throws InterruptedException — indicates that yield() said to stop execution.
      */
-    public void msPause(long ms) throws InterruptedException
+    public void pause(TimeMeasure time) throws InterruptedException
     {
-        long startTime = System.currentTimeMillis ();
+        long startTime = System.nanoTime ();
 
-        while (System.currentTimeMillis () - startTime <= ms)
+        while (System.nanoTime () - startTime <= time.durationIn(TimeMeasure.Units.NANOSECONDS))
             yield();
     }
 }
