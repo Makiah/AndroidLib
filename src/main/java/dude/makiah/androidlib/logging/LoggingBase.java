@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import dude.makiah.androidlib.threading.ParallelTask;
 import dude.makiah.androidlib.threading.TaskParent;
+import dude.makiah.androidlib.threading.TimeMeasure;
 
 import java.util.ArrayList;
 
@@ -87,7 +88,7 @@ public abstract class LoggingBase extends ParallelTask
         while (true)
         {
             refreshOnScreenConsole();
-            flow.msPause(300);
+            flow.pause(new TimeMeasure(TimeMeasure.Units.MILLISECONDS, 300));
         }
     }
 }
